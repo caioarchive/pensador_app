@@ -1,6 +1,7 @@
 import { where } from 'sequelize'
 import { usuarioModel } from '../usuario/usuarioModel.js'
-
+import bcrypt from 'bcrypt'
+import { createTokenUser } from '../../shared/function/createTokenUser.js'
 export const login = async (req, res, next) => {
     const { email, senha } = req.body
 
@@ -26,7 +27,15 @@ export const login = async (req, res, next) => {
             err.stausCode = 404
             throw err
         }
-        res.status(200).json({ usuarioEncontrado })
+
+        const comparaSenha = bcrypt.compareSync(senha, usuarioEncontrado.senha)
+        if (!comparaSenha) {
+            const err = new Error('Credenciais invalidas!')
+            err.stausCode = 404
+            throw err
+        }
+        await createTokenUser(usuarioEncontrado, req, res)
+
     } catch (error) {
         next(error)
     }

@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { listarPensamento } from "./pensamentoController.js";
+import { criarPensamento, listarPensamento } from "./pensamentoController.js";
 
-import { verifyToken
+import {
+    verifyToken
 
- } from "../../middlewares/verifyToken.js";
+} from "../../middlewares/verifyToken.js";
+import { pensamentoModel } from "./pensamentoModel.js";
 const router = Router()
 
 router.get('/', verifyToken, listarPensamento)
+router.post("/", verifyToken, criarPensamento)
 
 export default router

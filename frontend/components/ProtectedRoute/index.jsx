@@ -1,0 +1,11 @@
+import { getToken } from "../../utils/auth";
+import { Navigate } from "react-router-dom";
+export const ProtectedRoute = ({children}) => {
+    const token = getToken()
+
+    if(!token){
+        return <Navigate to='/login' replace/>
+    }
+
+    return children
+}

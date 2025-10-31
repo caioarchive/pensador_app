@@ -1,0 +1,8 @@
+.containerForm {
+    max-width: 400px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(194, 226, 255);
+}
